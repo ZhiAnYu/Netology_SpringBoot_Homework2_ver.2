@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.netology.RestHomework2_my.exception.InvalidCredentialException;
 import ru.netology.RestHomework2_my.exception.UnauthorizedUserException;
 import ru.netology.RestHomework2_my.model.Authorities;
+import ru.netology.RestHomework2_my.model.User;
 import ru.netology.RestHomework2_my.repository.UserRepository;
 
 import java.util.List;
@@ -16,18 +17,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<Authorities> getAuthorities(String user, String password) {
+    public List<Authorities> getAuthorities(User user) {
         //проверяем на пустые user и password в query
-        if (isEmpty(user) || isEmpty(password)) {
+        if (isEmpty(user.getUser()) || isEmpty(user.getPassword())) {
             throw new InvalidCredentialException("User name or password is empty");
         }
 
         //получаем список разрешений из репозитория для user и password
-        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user, password);
+        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user);
 
         //если список пустой (неправильный пароль, нет user в списке)
         if (isEmpty(userAuthorities)) {
-            throw new UnauthorizedUserException("Unknown user " + user);
+            throw new UnauthorizedUserException("Unknown user " + user.getUser());
         }
 
         //если все в порядке возвращаем список разрешений
