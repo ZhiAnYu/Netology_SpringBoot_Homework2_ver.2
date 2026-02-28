@@ -32,17 +32,10 @@ public class GlobalErrorHandler {
 //        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result.getAllErrors());
 //    }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
-        BindingResult result = ex.getBindingResult();
-        Map<String, String> errors = new HashMap<>();
-
-        // Собираем ошибки по каждому полю в удобную карту
-        for (FieldError error : result.getFieldErrors()) {
-            errors.put(error.getField(), error.getDefaultMessage());
-        }
-
-        // Вернёт JSON вида: {"user": "Имя обязательно", "password": "Длина от 3"}
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    // ✅ Перехватываем ResponseStatusException из резолвера
+    @ExceptionHandler(org.springframework.web.server.ResponseStatusException.class)
+    public ResponseEntity<String> handleResponseStatusException(
+            org.springframework.web.server.ResponseStatusException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
     }
 }
