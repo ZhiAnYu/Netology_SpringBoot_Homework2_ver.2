@@ -1,0 +1,10 @@
+services:
+  auth-app:
+    container_name: netology-demo-docker
+    build: .
+    ports:
+      - "9090:9090"
+    environment:
+      - SERVER_PORT
+    # Перезапуск контейнера при ошибке
+    restart: unless-stopped
