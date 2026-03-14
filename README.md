@@ -1,3 +1,8 @@
+##port =9090
+# примеры для проверки
+http://localhost:9090/authorize?user=user&password=234
+http://localhost:9090/authorize?user=admin&password=123
+
 # Задача «Dockerfile»
 
 Соберите ваш первый Docker-образ на основе приложения авторизации, которое вы писали во [втором домашнем задании](../../spring_boot_rest/task1/README.md). Возьмите только серверное приложение без html из прошлого задания. Для этого вы сначала напишете ваш Dockerfile, а затем для удобства, напишете манифест для docker-compose.
