@@ -1,4 +1,4 @@
-##port =9090
+## port =9090
 # примеры для проверки
 http://localhost:9090/authorize?user=user&password=234
 http://localhost:9090/authorize?user=admin&password=123
